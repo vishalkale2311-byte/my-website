@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog Management System</title>
+
+    <!-- ================= CSS ================= -->
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        /* ---------- NAVBAR ---------- */
+
+        header {
+            background: #111827;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+
+            min-height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo span {
+            color: #6366f1;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #818cf8;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            min-height: 500px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+
+            padding: 40px 20px;
+        }
+
+        .hero-content {
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #facc15;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+
+            padding: 14px 30px;
+
+            background: white;
+            color: #4f46e5;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ---------- COMMON SECTION ---------- */
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 35px;
+            color: #111827;
+        }
+
+        .section-title p {
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        /* ---------- BLOG SECTION ---------- */
+
+        .blogs-section {
+            width: 90%;
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 80px 0;
+        }
+
+        /* Search */
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-container input {
+            width: 80%;
+            max-width: 600px;
+
+            padding: 15px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border-color: #4f46e5;
+        }
+
+        /* Blog cards */
+
+        .blog-container {
+            display: grid;
+
+            grid-template-columns:
+            repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 25px;
+        }
+
+        .blog-card {
+            background: white;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,0.08);
+
+            transition: 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            height: 180px;
+
+            background: linear-gradient(
+                135deg,
+                #6366f1,
+                #8b5cf6
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-size: 55px;
+        }
+
+        .blog-content {
+            padding: 22px;
+        }
+
+        .blog-category {
+            display: inline-block;
+
+            background: #eef2ff;
+            color: #4f46e5;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            margin-bottom: 10px;
+        }
+
+        .blog-content h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .blog-author {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .blog-content p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+
+        .blog-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 7px;
+        }
+
+        .blog-actions button {
+            border: none;
+
+            padding: 9px 12px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .like-btn {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .edit-btn {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .delete-btn {
+            background: #f3f4f6;
+            color: #dc2626;
+        }
+
+        /* ---------- CREATE BLOG ---------- */
+
+        .create-section {
+            background: white;
+            padding: 80px 20px;
+        }
+
+        .blog-form {
+            width: 90%;
+            max-width: 800px;
+
+            margin: auto;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-form label {
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 7px;
+        }
+
+        .blog-form input,
+        .blog-form select,
+        .blog-form textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            font-family: Arial, sans-serif;
+
+            outline: none;
+        }
+
+        .blog-form input:focus,
+        .blog-form select:focus,
+        .blog-form textarea:focus {
+            border-color: #4f46e5;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .submit-btn,
+        .cancel-btn {
+
+            padding: 13px 25px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        /* ---------- ABOUT ---------- */
+
+        .about-section {
+
+            width: 90%;
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 80px 0;
+
+            text-align: center;
+        }
+
+        .about-section p {
+            font-size: 17px;
+            color: #555;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            background: #111827;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+        /* ---------- NO BLOG ---------- */
+
+        .no-blog {
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #6b7280;
+        }
+
+        /* ---------- MOBILE ---------- */
+
+        @media (max-width: 768px) {
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+                left: 0;
+
+                width: 100%;
+
+                background: #111827;
+
+                flex-direction: column;
+
+                text-align: center;
+
+                padding: 20px;
+
+                gap: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HTML ================= -->
+
+    <!-- NAVIGATION -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <span>Blog</span>Hub
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+
+                <li>
+                    <a href="#blogs">Blogs</a>
+                </li>
+
+                <li>
+                    <a href="#create">Create Blog</a>
+                </li>
+
+                <li>
+                    <a href="#about">About</a>
+                </li>
+
+            </ul>
+
+            <button
+                class="menu-btn"
+                onclick="toggleMenu()">
+
+                ☰
+
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- HOME -->
+
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Welcome to
+                <span>BlogHub</span>
+            </h1>
+
+            <p>
+                Create, manage and share your blogs easily.
+            </p>
+
+            <a
+                href="#create"
+                class="hero-btn">
+
+                Create Your Blog
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- BLOGS -->
+
+    <section
+        id="blogs"
+        class="blogs-section">
+
+        <div class="section-title">
+
+            <h2>Latest Blogs</h2>
+
+            <p>
+                Explore our latest blog posts
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-container">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search blogs..."
+                onkeyup="searchBlogs()">
+
+        </div>
+
+
+        <!-- BLOG CONTAINER -->
+
+        <div
+            id="blogContainer"
+            class="blog-container">
+
+        </div>
+
+    </section>
+
+
+    <!-- CREATE BLOG -->
+
+    <section
+        id="create"
+        class="create-section">
+
+        <div class="section-title">
+
+            <h2>Create New Blog</h2>
+
+            <p>
+                Write and publish your own blog
+            </p>
+
+        </div>
+
+
+        <form
+            id="blogForm"
+            class="blog-form">
+
+
+            <input
+                type="hidden"
+                id="editIndex">
+
+
+            <label>
+                Blog Title
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Enter blog title"
+                required>
+
+
+            <label>
+                Author Name
+            </label>
+
+            <input
+                type="text"
+                id="author"
+                placeholder="Enter author name"
+                required>
+
+
+            <label>
+                Category
+            </label>
+
+            <select
+                id="category"
+                required>
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="Technology">
+                    Technology
+                </option>
+
+                <option value="Education">
+                    Education
+                </option>
+
+                <option value="Programming">
+                    Programming
+                </option>
+
+                <option value="Travel">
+                    Travel
+                </option>
+
+                <option value="Lifestyle">
+                    Lifestyle
+                </option>
+
+            </select>
+
+
+            <label>
+                Blog Content
+            </label>
+
+            <textarea
+                id="content"
+                rows="8"
+                placeholder="Write your blog here..."
+                required></textarea>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                    id="submitButton">
+
+                    Publish Blog
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="resetForm()">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section
+        id="about"
+        class="about-section">
+
+        <div class="section-title">
+
+            <h2>
+                About BlogHub
+            </h2>
+
+        </div>
+
+        <p>
+
+            BlogHub is a simple Blog Management System
+            developed using HTML, CSS and JavaScript.
+            Users can create, edit, delete, search and
+            like blog posts.
+
+        </p>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 BlogHub |
+            Blog Management System
+        </p>
+
+    </footer>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* --------------------------------
+           DEFAULT BLOGS
+        -------------------------------- */
+
+        let blogs =
+            JSON.parse(
+                localStorage.getItem("blogs")
+            ) || [
+
+                {
+                    title:
+                        "Introduction to Web Development",
+
+                    author:
+                        "Rocky",
+
+                    category:
+                        "Technology",
+
+                    content:
+                        "Web development is the process of creating websites and web applications using HTML, CSS and JavaScript.",
+
+                    likes: 0
+                },
+
+                {
+                    title:
+                        "Why Learn JavaScript?",
+
+                    author:
+                        "Admin",
+
+                    category:
+                        "Programming",
+
+                    content:
+                        "JavaScript is a popular programming language used to create interactive and dynamic websites.",
+
+                    likes: 0
+                },
+
+                {
+                    title:
+                        "Importance of Education",
+
+                    author:
+                        "BlogHub",
+
+                    category:
+                        "Education",
+
+                    content:
+                        "Education helps people develop knowledge, skills and confidence to achieve their goals.",
+
+                    likes: 0
+                }
+
+            ];
+
+
+        /* --------------------------------
+           SAVE BLOGS
+        -------------------------------- */
+
+        function saveBlogs() {
+
+            localStorage.setItem(
+                "blogs",
+                JSON.stringify(blogs)
+            );
+
+        }
+
+
+        /* --------------------------------
+           DISPLAY BLOGS
+        -------------------------------- */
+
+        function displayBlogs(
+            blogList = blogs
+        ) {
+
+            const container =
+                document.getElementById(
+                    "blogContainer"
+                );
+
+            container.innerHTML = "";
+
+
+            if (blogList.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="no-blog">
+
+                        <h3>
+                            No blogs found
+                        </h3>
+
+                        <p>
+                            Try another search.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            blogList.forEach(
+                (blog, index) => {
+
+                    container.innerHTML += `
+
+                        <article
+                            class="blog-card">
+
+                            <div
+                                class="blog-image">
+
+                                📝
+
+                            </div>
+
+
+                            <div
+                                class="blog-content">
+
+                                <span
+                                    class="blog-category">
+
+                                    ${escapeHTML(
+                                        blog.category
+                                    )}
+
+                                </span>
+
+
+                                <h3>
+
+                                    ${escapeHTML(
+                                        blog.title
+                                    )}
+
+                                </h3>
+
+
+                                <div
+                                    class="blog-author">
+
+                                    By
+                                    ${escapeHTML(
+                                        blog.author
+                                    )}
+
+                                </div>
+
+
+                                <p>
+
+                                    ${escapeHTML(
+                                        getShortContent(
+                                            blog.content
+                                        )
+                                    )}
+
+                                </p>
+
+
+                                <div
+                                    class="blog-actions">
+
+
+                                    <button
+                                        class="like-btn"
+                                        onclick="likeBlog(${index})">
+
+                                        ❤️
+                                        ${blog.likes}
+
+                                    </button>
+
+
+                                    <button
+                                        class="edit-btn"
+                                        onclick="editBlog(${index})">
+
+                                        ✏️ Edit
+
+                                    </button>
+
+
+                                    <button
+                                        class="delete-btn"
+                                        onclick="deleteBlog(${index})">
+
+                                        🗑️ Delete
+
+                                    </button>
+
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        /* --------------------------------
+           SHORT CONTENT
+        -------------------------------- */
+
+        function getShortContent(
+            content
+        ) {
+
+            if (content.length > 120) {
+
+                return (
+                    content.substring(
+                        0,
+                        120
+                    ) + "..."
+                );
+
+            }
+
+            return content;
+
+        }
+
+
+        /* --------------------------------
+           ADD / UPDATE BLOG
+        -------------------------------- */
+
+        document
+            .getElementById("blogForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const title =
+                        document
+                            .getElementById("title")
+                            .value
+                            .trim();
+
+
+                    const author =
+                        document
+                            .getElementById("author")
+                            .value
+                            .trim();
+
+
+                    const category =
+                        document
+                            .getElementById("category")
+                            .value;
+
+
+                    const content =
+                        document
+                            .getElementById("content")
+                            .value
+                            .trim();
+
+
+                    const editIndex =
+                        document
+                            .getElementById(
+                                "editIndex"
+                            )
+                            .value;
+
+
+                    /* UPDATE */
+
+                    if (editIndex !== "") {
+
+                        blogs[editIndex].title =
+                            title;
+
+                        blogs[editIndex].author =
+                            author;
+
+                        blogs[editIndex].category =
+                            category;
+
+                        blogs[editIndex].content =
+                            content;
+
+
+                        alert(
+                            "Blog updated successfully!"
+                        );
+
+                    }
+
+                    /* ADD */
+
+                    else {
+
+                        const newBlog = {
+
+                            title: title,
+
+                            author: author,
+
+                            category: category,
+
+                            content: content,
+
+                            likes: 0
+
+                        };
+
+
+                        blogs.unshift(
+                            newBlog
+                        );
+
+
+                        alert(
+                            "Blog published successfully!"
+                        );
+
+                    }
+
+
+                    saveBlogs();
+
+                    displayBlogs();
+
+                    resetForm();
+
+
+                    document
+                        .getElementById(
+                            "blogs"
+                        )
+                        .scrollIntoView({
+                            behavior: "smooth"
+                        });
+
+                }
+            );
+
+
+        /* --------------------------------
+           DELETE BLOG
+        -------------------------------- */
+
+        function deleteBlog(index) {
+
+            const result =
+                confirm(
+                    "Are you sure you want to delete this blog?"
+                );
+
+
+            if (result) {
+
+                blogs.splice(
+                    index,
+                    1
+                );
+
+                saveBlogs();
+
+                displayBlogs();
+
+                alert(
+                    "Blog deleted successfully!"
+                );
+
+            }
+
+        }
+
+
+        /* --------------------------------
+           LIKE BLOG
+        -------------------------------- */
+
+        function likeBlog(index) {
+
+            blogs[index].likes++;
+
+            saveBlogs();
+
+            displayBlogs();
+
+        }
+
+
+        /* --------------------------------
+           EDIT BLOG
+        -------------------------------- */
+
+        function editBlog(index) {
+
+            const blog =
+                blogs[index];
+
+
+            document
+                .getElementById("title")
+                .value =
+                blog.title;
+
+
+            document
+                .getElementById("author")
+                .value =
+                blog.author;
+
+
+            document
+                .getElementById("category")
+                .value =
+                blog.category;
+
+
+            document
+                .getElementById("content")
+                .value =
+                blog.content;
+
+
+            document
+                .getElementById("editIndex")
+                .value =
+                index;
+
+
+            document
+                .getElementById(
+                    "submitButton"
+                )
+                .textContent =
+                "Update Blog";
+
+
+            document
+                .getElementById(
+                    "create"
+                )
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+        /* --------------------------------
+           RESET FORM
+        -------------------------------- */
+
+        function resetForm() {
+
+            document
+                .getElementById(
+                    "blogForm"
+                )
+                .reset();
+
+
+            document
+                .getElementById(
+                    "editIndex"
+                )
+                .value = "";
+
+
+            document
+                .getElementById(
+                    "submitButton"
+                )
+                .textContent =
+                "Publish Blog";
+
+        }
+
+
+        /* --------------------------------
+           SEARCH
+        -------------------------------- */
+
+        function searchBlogs() {
+
+            const searchText =
+                document
+                    .getElementById(
+                        "searchInput"
+                    )
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            const filteredBlogs =
+                blogs.filter(
+                    blog =>
+
+                    blog.title
+                        .toLowerCase()
+                        .includes(
+                            searchText
+                        )
+
+                    ||
+
+                    blog.author
+                        .toLowerCase()
+                        .includes(
+                            searchText
+                        )
+
+                    ||
+
+                    blog.category
+                        .toLowerCase()
+                        .includes(
+                            searchText
+                        )
+
+                    ||
+
+                    blog.content
+                        .toLowerCase()
+                        .includes(
+                            searchText
+                        )
+                );
+
+
+            displayBlogs(
+                filteredBlogs
+            );
+
+        }
+
+
+        /* --------------------------------
+           MOBILE MENU
+        -------------------------------- */
+
+        function toggleMenu() {
+
+            document
+                .querySelector(
+                    ".nav-links"
+                )
+                .classList
+                .toggle("active");
+
+        }
+
+
+        /* --------------------------------
+           SECURITY
+        -------------------------------- */
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent = text;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* --------------------------------
+           START WEBSITE
+        -------------------------------- */
+
+        displayBlogs();
+
+    </script>
+
+</body>
+
+</html>
